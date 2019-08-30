@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>rviz_mplayer</name>
+  <version>0.1.0</version>
+  <description>rviz plugin to embed mplayer</description>
+
+  <maintainer email="naoki.mizuno.256@gmail.com">Naoki Mizuno</maintainer>
+
+  <license>MIT</license>
+
+  <url type="website">https://github.com/naoki-mizuno/rviz_mplayer</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <depend>roscpp</depend>
+  <depend>rviz</depend>
+  <depend>pluginlib</depend>
+
+  <build_depend>qtbase5-dev</build_depend>
+
+  <depend>libqt5-core</depend>
+  <depend>libqt5-gui</depend>
+  <depend>libqt5-widgets</depend>
+  <depend>libqt5-network</depend>
+  <export>
+    <rviz plugin="${prefix}/plugin_description.xml"/>
+  </export>
+</package>

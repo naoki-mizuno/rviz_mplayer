@@ -1,0 +1,5 @@
+<library path="lib/librviz_mplayer">
+  <class name="rviz_mplayer/MPlayerPanel" type="rviz_mplayer::MPlayerPanel" base_class_type="rviz::Panel">
+    <description>MPlayer panel</description>
+  </class>
+</library>

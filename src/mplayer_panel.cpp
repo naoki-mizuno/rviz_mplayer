@@ -12,17 +12,27 @@ MPlayerPanel::MPlayerPanel(QWidget* parent /* = nullptr */)
     mplayer_ = new QMPwidgetSizeHint(-1, 200);
     layout->addWidget(mplayer_);
 
-    auto h_layout = new QHBoxLayout();
+    auto v_layout = new QVBoxLayout();
+
+    auto h_layout_1 = new QHBoxLayout();
     // Enable checkbox
     checkbox_enable_ = new QCheckBox("Enable");
     checkbox_enable_->setEnabled(true);
-    h_layout->addWidget(checkbox_enable_);
-    // URI
-    h_layout->addWidget(new QLabel("URI"));
-    lineedit_uri_ = new QLineEdit("");
-    h_layout->addWidget(lineedit_uri_);
-    layout->addLayout(h_layout);
+    h_layout_1->addWidget(checkbox_enable_);
+    // Optional arguments
+    h_layout_1->addWidget(new QLabel("Args"));
+    lineedit_args_ = new QLineEdit("");
+    h_layout_1->addWidget(lineedit_args_);
+    v_layout->addLayout(h_layout_1);
 
+    auto h_layout_2 = new QHBoxLayout();
+    // URI
+    h_layout_2->addWidget(new QLabel("URI"));
+    lineedit_uri_ = new QLineEdit("");
+    h_layout_2->addWidget(lineedit_uri_);
+    v_layout->addLayout(h_layout_2);
+
+    layout->addLayout(v_layout);
     setLayout(layout);
 
     connect(checkbox_enable_, &QCheckBox::stateChanged,
@@ -44,6 +54,9 @@ MPlayerPanel::load(const rviz::Config& config) {
     bool start;
     QString tmp_text;
 
+    if (config.mapGetString("Args", &tmp_text)) {
+        lineedit_args_->setText(tmp_text);
+    }
     if (config.mapGetString("URI", &tmp_text)) {
         lineedit_uri_->setText(tmp_text);
     }
@@ -59,12 +72,15 @@ MPlayerPanel::save(rviz::Config config) const {
 
     config.mapSetValue("Enabled", checkbox_enable_->isChecked());
     config.mapSetValue("URI", lineedit_uri_->text());
+    config.mapSetValue("Args", lineedit_args_->text());
 }
 
 void
 MPlayerPanel::mplayer_start_stop(bool start) {
     if (start) {
-        mplayer_->start();
+        auto args = lineedit_args_->text().split(" ");
+
+        mplayer_->start(args);
         lineedit_uri_->setEnabled(true);
 
         if (!lineedit_uri_->text().isEmpty()) {

@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QStringList>
 #include <QVBoxLayout>
 
 // MPlayer widget
@@ -34,6 +35,7 @@ public Q_SLOTS:
 protected:
     QCheckBox* checkbox_enable_;
     QLineEdit* lineedit_uri_;
+    QLineEdit* lineedit_args_;
     QString prev_uri_;
     QMPwidgetSizeHint* mplayer_;
 
